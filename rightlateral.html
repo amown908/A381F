@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lateral Console (FO) — A380 Flight Deck</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #1e1e24; color: #e2e8f0;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .back-link { align-self: flex-start; color: #38bdf8; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        .back-link:hover { text-decoration: underline; }
+        h1 { color: #ffffff; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; margin-bottom: 25px; }
+        .image-container {
+            max-width: 100%; border: 3px solid #374151;
+            border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden; margin-bottom: 35px;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+        .parts-section { width: 100%; max-width: 900px; }
+        .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
+        .search-box {
+            width: 100%; padding: 10px; margin-bottom: 15px;
+            background: #1f2937; border: 1px solid #374151;
+            border-radius: 6px; color: #f3f4f6; font-size: 0.9em;
+        }
+        .search-box:focus { outline: none; border-color: #38bdf8; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        thead tr { background: #1a202c; color: #38bdf8; text-align: left; }
+        th { padding: 12px 15px; border-bottom: 2px solid #38bdf8; }
+        td { padding: 10px 15px; border-bottom: 1px solid #374151; }
+        tbody tr:nth-child(even) { background: #1f2937; }
+        tbody tr:hover { background: #263348; }
+        .pn { font-family: monospace; color: #f97316; }
+        .sn { font-family: monospace; color: #a3e635; }
+        .na { color: #6b7280; font-style: italic; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Full Cockpit</a>
+    <h1>Lateral Console — First Officer Side</h1>
+    <p class="subtitle">Sidestick, NWS tiller, oxygen mask, OIT display and associated equipment.</p>
+
+    <div class="image-container">
+        <img src="FOLateral.jpg" alt="FO Lateral Console Close-Up">
+    </div>
+
+    <div class="parts-section">
+        <h2>Parts Index</h2>
+        <input class="search-box" type="text" id="searchFOLateral" onkeyup="filterTable('searchFOLateral','foLateralTable')" placeholder="Search description, P/N or S/N...">
+        <table id="foLateralTable">
+            <thead><tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr></thead>
+            <tbody>
+                <tr><td>Boomset - FO</td><td class="pn">HME-1410-CA3</td><td class="sn">015-016324</td></tr>
+                <tr><td>Cable - FO AFMR Laptop</td><td class="na">Not installed</td><td class="na">Not installed</td></tr>
+                <tr><td>Flashlight F/O</td><td class="pn">216851</td><td class="na">N/A</td></tr>
+                <tr><td>Handmic - FO</td><td class="pn">85-16-11494-05</td><td class="na">sticker missing</td></tr>
+                <tr><td>Laptop - FO</td><td class="pn">CF19EAL</td><td class="sn">1FKSA58666</td></tr>
+                <tr><td>Light – Briefcase FO</td><td class="pn">D947-61-001-002</td><td class="sn">94761-0105</td></tr>
+                <tr><td>Light - Lateral Console - FO</td><td class="pn">D947-31-001-002</td><td class="sn">947-31-0102</td></tr>
+                <tr><td>Light Map FO</td><td class="pn">D947-16-001-004</td><td class="sn">947-16-0225</td></tr>
+                <tr><td>NWS Hand Wheel - FO</td><td class="pn">LA5F60071800101 / 330TS10Y00</td><td class="sn">330TS0102</td></tr>
+                <tr><td>O2 Box Assy - FO</td><td class="pn">MXP810</td><td class="sn">SE35879</td></tr>
+                <tr><td>O2 Mask - FO</td><td class="pn">MF20-542</td><td class="sn">150832</td></tr>
+                <tr><td>OIT Display - FO</td><td class="pn">2513751511001</td><td class="sn">2513751510211</td></tr>
+                <tr><td>OIT Additional Device - FO</td><td class="pn">2513751851002</td><td class="sn">2513751851083</td></tr>
+                <tr><td>Rope Escape F/O</td><td class="pn">216851</td><td class="sn">22</td></tr>
+                <tr><td>Side Stick - FO</td><td class="pn">L27310001</td><td class="sn">SIM9503</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function filterTable(inputId, tableId) {
+            const input = document.getElementById(inputId).value.toLowerCase();
+            document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
