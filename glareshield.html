@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glareshield & Main Panel — A380 Flight Deck</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #1e1e24; color: #e2e8f0;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .back-link { align-self: flex-start; color: #38bdf8; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        .back-link:hover { text-decoration: underline; }
+        h1 { color: #ffffff; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; margin-bottom: 25px; }
+        .image-container {
+            max-width: 100%; border: 3px solid #374151;
+            border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden; margin-bottom: 35px;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+        .parts-section { width: 100%; max-width: 900px; }
+        .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
+        .search-box {
+            width: 100%; padding: 10px; margin-bottom: 15px;
+            background: #1f2937; border: 1px solid #374151;
+            border-radius: 6px; color: #f3f4f6; font-size: 0.9em;
+        }
+        .search-box:focus { outline: none; border-color: #38bdf8; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        thead tr { background: #1a202c; color: #38bdf8; text-align: left; }
+        th { padding: 12px 15px; border-bottom: 2px solid #38bdf8; }
+        td { padding: 10px 15px; border-bottom: 1px solid #374151; }
+        tbody tr:nth-child(even) { background: #1f2937; }
+        tbody tr:hover { background: #263348; }
+        .pn { font-family: monospace; color: #f97316; }
+        .sn { font-family: monospace; color: #a3e635; }
+        .na { color: #6b7280; font-style: italic; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Full Cockpit</a>
+    <h1>Glareshield &amp; Main Panel</h1>
+    <p class="subtitle">Primary display units (PFD/ND), FCU, MFDs and OIT table assemblies.</p>
+
+    <div class="image-container">
+        <img src="glaremain.png" alt="Glareshield Close-Up">
+    </div>
+
+    <div class="parts-section">
+        <h2>Parts Index</h2>
+        <input class="search-box" type="text" id="searchGlareshield" onkeyup="filterTable('searchGlareshield','glareshieldTable')" placeholder="Search description, P/N or S/N...">
+        <table id="glareshieldTable">
+            <thead><tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr></thead>
+            <tbody>
+                <tr><td>Light - Sliding Table Capt</td><td class="pn">D947-43-001-002</td><td class="sn">947-43-0103</td></tr>
+                <tr><td>Light - Sliding Table FO</td><td class="pn">D947-53-001-003</td><td class="sn">947-53-0238</td></tr>
+                <tr><td>MFD L1 (Capt. PFD)</td><td class="pn">C19596AC04</td><td class="sn">C19596000193</td></tr>
+                <tr><td>MFD L2 (Capt. ND)</td><td class="pn">C19596AC04</td><td class="sn">C19596000155</td></tr>
+                <tr><td>MFD L3 (Capt. FMS)</td><td class="pn">C19596AC04</td><td class="sn">C19596000196</td></tr>
+                <tr><td>MFD C1 (EWD Upper)</td><td class="pn">C19596AC04</td><td class="sn">C19596000194</td></tr>
+                <tr><td>MFD C2 (SD)</td><td class="pn">C19596AC04</td><td class="sn">C19596000190</td></tr>
+                <tr><td>MFD R1 (FO. PFD)</td><td class="pn">C19596AC04</td><td class="sn">C19596000198</td></tr>
+                <tr><td>MFD R2 (FO. ND)</td><td class="pn">C19596AC04</td><td class="sn">C19596000191</td></tr>
+                <tr><td>MFD R3 (FO. FMS)</td><td class="pn">C19596AC04</td><td class="sn">C19596000839</td></tr>
+                <tr><td>OIT Table Assembly (MIP FO)</td><td class="pn">L25110751000 00</td><td class="sn">MSI 10143</td></tr>
+                <tr><td>OIT Table Assembly (MIP Capt)</td><td class="pn">L2511070100000</td><td class="sn">MSI10143</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function filterTable(inputId, tableId) {
+            const input = document.getElementById(inputId).value.toLowerCase();
+            document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
