@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive A380 Flight Deck</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: #1e1e24; 
+            color: #e2e8f0; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { color: #ffffff; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; margin-bottom: 25px; }
+
+        .cockpit-container { 
+            position: relative; 
+            display: inline-block; 
+            max-width: 100%;
+            border: 4px solid #334155;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+        }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .panel-box {
+            position: absolute;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+        }
+        .panel-box:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: #38bdf8;
+        }
+
+        /* Tooltip label on hover */
+        .panel-box::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.75);
+            color: #38bdf8;
+            font-size: 0.7em;
+            padding: 2px 7px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        .panel-box:hover::after { opacity: 1; }
+
+        #overhead-zone    { top: 0%;    left: 23.5%; width: 53.5%; height: 28.5%; }
+        #compass-zone     { top: 28.5%; left: 46.5%; width: 7.5%;  height: 12%; }
+        #glareshield-zone { top: 40.5%; left: 28.8%; width: 41.6%; height: 25%; }
+        #left-lateral     { top: 45.5%; left: 1.5%;  width: 27.3%; height: 27.5%; }
+        #right-lateral    { top: 45.5%; left: 70.4%; width: 28%;   height: 27.5%; }
+        #pedestal-zone    { top: 65.5%; left: 39.5%; width: 21%;   height: 34.5%; }
+        #left-seat        { top: 78%;   left: 21%;   width: 16.5%; height: 22%; }
+        #right-seat       { top: 78%;   left: 62.5%; width: 16.5%; height: 22%; }
+    </style>
+</head>
+<body>
+
+    <h1>A380 Flight Deck Guide</h1>
+    <p class="subtitle">Hover over a panel to highlight it. Click to open its detail page.</p>
+
+    <div class="cockpit-container">
+        <img src="cockpit.jpg" alt="A380 Cockpit Overview">
+
+        <a href="overhead.html"     class="panel-box" id="overhead-zone"    title="Overhead Panel"></a>
+        <a href="compass.html"      class="panel-box" id="compass-zone"     title="Stdby Compass"></a>
+        <a href="glareshield.html"  class="panel-box" id="glareshield-zone" title="Glareshield & Main Panel"></a>
+        <a href="leftlateral.html"  class="panel-box" id="left-lateral"     title="Lateral Console - Capt"></a>
+        <a href="rightlateral.html" class="panel-box" id="right-lateral"    title="Lateral Console - FO"></a>
+        <a href="pedestal.html"     class="panel-box" id="pedestal-zone"    title="Pedestal"></a>
+        <a href="seats.html"        class="panel-box" id="left-seat"        title="Pilot Seats"></a>
+        <a href="seats.html"        class="panel-box" id="right-seat"       title="Pilot Seats"></a>
+    </div>
+
+</body>
+</html>
