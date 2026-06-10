@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedestal — A380 Flight Deck</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #1e1e24; color: #e2e8f0;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .back-link { align-self: flex-start; color: #38bdf8; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        .back-link:hover { text-decoration: underline; }
+        h1 { color: #ffffff; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; margin-bottom: 25px; }
+        .image-container {
+            max-width: 100%; border: 3px solid #374151;
+            border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden; margin-bottom: 35px;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+        .parts-section { width: 100%; max-width: 900px; }
+        .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
+        .search-box {
+            width: 100%; padding: 10px; margin-bottom: 15px;
+            background: #1f2937; border: 1px solid #374151;
+            border-radius: 6px; color: #f3f4f6; font-size: 0.9em;
+        }
+        .search-box:focus { outline: none; border-color: #38bdf8; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        thead tr { background: #1a202c; color: #38bdf8; text-align: left; }
+        th { padding: 12px 15px; border-bottom: 2px solid #38bdf8; }
+        td { padding: 10px 15px; border-bottom: 1px solid #374151; }
+        tbody tr:nth-child(even) { background: #1f2937; }
+        tbody tr:hover { background: #263348; }
+        .pn { font-family: monospace; color: #f97316; }
+        .sn { font-family: monospace; color: #a3e635; }
+        .na { color: #6b7280; font-style: italic; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Full Cockpit</a>
+    <h1>Pedestal</h1>
+    <p class="subtitle">Central hub — throttles, flap levers, speedbrakes, MCDU units and more.</p>
+
+    <div class="image-container">
+        <img src="pedestal.jpg" alt="Pedestal Close-Up">
+    </div>
+
+    <div class="parts-section">
+        <h2>Parts Index</h2>
+        <input class="search-box" type="text" id="searchPedestal" onkeyup="filterTable('searchPedestal','pedestalTable')" placeholder="Search description, P/N or S/N...">
+        <table id="pedestalTable">
+            <thead><tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr></thead>
+            <tbody>
+                <tr><td>Cockpit Voice Recorder CTL Box (CVR)</td><td class="pn">S161-1390-01</td><td class="sn">301469</td></tr>
+                <tr><td>CTL PNL-AESS (WXR)</td><td class="pn">965-1695-001</td><td class="sn">ISCA-000231</td></tr>
+                <tr><td>CTL Lever Speed Brake</td><td class="pn">321200-1M00</td><td class="sn">BA00020</td></tr>
+                <tr><td>ECAM – ICP 10</td><td class="pn">271TS10ABY02</td><td class="sn">271TS0192</td></tr>
+                <tr><td>Flap Slat Control Lever</td><td class="pn">80835-00-02</td><td class="sn">80835000000044</td></tr>
+                <tr><td>Handset (incl. Cable &amp; Bracket)</td><td class="pn">N40-1A10000-003</td><td class="sn">242599</td></tr>
+                <tr><td>KCCU - Capt</td><td class="pn">C16449AF</td><td class="sn">C16449000379</td></tr>
+                <tr><td>KCCU - FO</td><td class="pn">C16449BF</td><td class="sn">C16449000418</td></tr>
+                <tr><td>Park Brake Switch</td><td class="pn">058-002-003</td><td class="sn">H002093</td></tr>
+                <tr><td>Printer #1 Centre</td><td class="pn">251375218-1002</td><td class="sn">2513752180131</td></tr>
+                <tr><td>RAMP - FO</td><td class="pn">RMP8000AA120101</td><td class="sn">4112-0430</td></tr>
+                <tr><td>RAMP - Capt</td><td class="pn">RMP8000AA120101</td><td class="sn">4112-0206</td></tr>
+                <tr><td>Throttle Assy</td><td class="pn">FE370000003</td><td class="sn">FR032</td></tr>
+                <tr><td>Rudder Trim Indicator</td><td class="pn">196PN01Y02</td><td class="sn">RTI1023</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function filterTable(inputId, tableId) {
+            const input = document.getElementById(inputId).value.toLowerCase();
+            document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
