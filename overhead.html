@@ -12,12 +12,14 @@
             margin: 0; padding: 20px;
             display: flex; flex-direction: column; align-items: center;
         }
-        .back-link { align-self: flex-start; color: #38bdf8; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        .back-link {
+            align-self: flex-start; color: #38bdf8;
+            text-decoration: none; font-weight: bold; margin-bottom: 20px;
+        }
         .back-link:hover { text-decoration: underline; }
         h1 { color: #ffffff; margin-bottom: 5px; }
         .subtitle { color: #94a3b8; margin-bottom: 25px; }
 
-        /* ── IMAGE + CLICKABLE ZONES ── */
         .image-container {
             position: relative;
             display: inline-block;
@@ -30,42 +32,58 @@
         }
         img { max-width: 100%; height: auto; display: block; }
 
-        .sub-panel-zone {
+        .panel-zone {
             position: absolute;
-            border: 2px solid transparent;
+            background: rgba(100, 116, 139, 0.18);
+            border: 1.5px solid rgba(148, 163, 184, 0.45);
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4px;
+            overflow: hidden;
         }
-        .sub-panel-zone:hover {
-            background: rgba(234, 179, 8, 0.25);
-            border-color: #eab308;
+        .panel-zone:hover {
+            background: rgba(56, 189, 248, 0.22);
+            border-color: #38bdf8;
+        }
+        .panel-zone .zone-label {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.55em;
+            font-weight: 600;
+            line-height: 1.3;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+            letter-spacing: 0.02em;
+        }
+        .panel-zone .zone-fin {
+            color: #fbbf24;
+            font-size: 0.48em;
+            font-family: monospace;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+            margin-top: 2px;
         }
 
-        #apu-fire-zone   { top: 2%;   left: 36.8%; width: 26.4%; height: 11.5%; }
-        #adirs-zone      { top: 15%;  left: 2.8%;  width: 32.2%; height: 22.5%; }
-        #hydraulic-zone  { top: 56%;  left: 2.8%;  width: 32.2%; height: 20.5%; }
-        #electrical-zone { top: 56%;  left: 36.8%; width: 26.4%; height: 26.5%; }
+        #zone-capt-reset    { top: 15.5%; left: 2%;    width: 18%;  height: 26%; }
+        #zone-fo-reset      { top: 11.5%; left: 79%;   width: 19%;  height: 26%; }
+        #zone-gnd-hyd       { top: 11.5%; left: 21%;   width: 57%;  height: 10%; }
+        #zone-adj-light     { top: 21%;   left: 30%;   width: 10%;  height: 7%;  }
+        #zone-apu           { top: 37.5%; left: 2%;    width: 18%;  height: 10%; }
+        #zone-adirs         { top: 47%;   left: 2%;    width: 18%;  height: 13%; }
+        #zone-capt-fctl     { top: 60%;   left: 2%;    width: 18%;  height: 20%; }
+        #zone-eng-fire      { top: 37%;   left: 21%;   width: 57%;  height: 11%; }
+        #zone-hyd-fuel      { top: 48%;   left: 21%;   width: 57%;  height: 22%; }
+        #zone-elec-air      { top: 70%;   left: 21%;   width: 57%;  height: 17%; }
+        #zone-anti-ice      { top: 87%;   left: 21%;   width: 57%;  height: 10%; }
+        #zone-fo-fctl       { top: 60%;   left: 79%;   width: 19%;  height: 28%; }
+        #zone-cvr           { top: 37%;   left: 79%;   width: 19%;  height: 8%;  }
+        #zone-rmp           { top: 45%;   left: 79%;   width: 19%;  height: 14%; }
 
-        /* ── POPUP ── */
-        .popup-box {
-            display: none;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: #1f2937;
-            border: 2px solid #38bdf8;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
-            z-index: 100;
-            width: 90%; max-width: 400px;
-            text-align: left;
-        }
-        .popup-box h3 { margin-top: 0; color: #38bdf8; }
-        .part-number { font-size: 1.1em; color: #f97316; font-family: monospace; margin: 10px 0; }
-        .custom-note { font-style: italic; color: #fbbf24; margin-top: 10px; background: #111827; padding: 10px; border-radius: 4px; }
-        .close-btn { float: right; background: #374151; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
-        .close-btn:hover { background: #ef4444; }
         .overlay-screen {
             display: none;
             position: fixed;
@@ -73,8 +91,34 @@
             background: rgba(0,0,0,0.75);
             z-index: 99;
         }
+        .popup-box {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f2937;
+            border: 2px solid #38bdf8;
+            padding: 22px 25px;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.9);
+            z-index: 100;
+            width: 92%; max-width: 420px;
+        }
+        .popup-box h3 { margin: 0 0 12px 0; color: #38bdf8; font-size: 1em; padding-right: 30px; }
+        .popup-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 0.85em; }
+        .popup-row .label { color: #94a3b8; min-width: 40px; }
+        .popup-row .value { font-family: monospace; color: #f97316; }
+        .popup-row .value.sn { color: #a3e635; }
+        .popup-divider { border: none; border-top: 1px solid #374151; margin: 12px 0; }
+        .popup-contents { font-size: 0.82em; color: #cbd5e1; line-height: 1.6; }
+        .popup-contents strong { color: #fbbf24; }
+        .close-btn {
+            position: absolute; top: 12px; right: 12px;
+            background: #374151; color: white; border: none;
+            padding: 4px 9px; cursor: pointer; border-radius: 4px; font-size: 0.85em;
+        }
+        .close-btn:hover { background: #ef4444; }
 
-        /* ── PARTS TABLE ── */
         .parts-section { width: 100%; max-width: 900px; }
         .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
         .search-box {
@@ -98,51 +142,230 @@
 
     <a href="index.html" class="back-link">← Back to Full Cockpit</a>
     <h1>Overhead Panel</h1>
-    <p class="subtitle">Click on a sub-panel to view its details. Scroll down for the full parts index.</p>
+    <p class="subtitle">Click any panel zone to view its FIN, P/N and contents. Scroll down for the full parts index.</p>
 
-    <!-- ── OVERHEAD IMAGE WITH CLICKABLE ZONES ── -->
     <div class="image-container">
         <img src="overhead.png" alt="A380 Overhead Panel">
 
-        <div class="sub-panel-zone" id="apu-fire-zone"   onclick="showPopup('apu-fire')"></div>
-        <div class="sub-panel-zone" id="adirs-zone"      onclick="showPopup('adirs')"></div>
-        <div class="sub-panel-zone" id="hydraulic-zone"  onclick="showPopup('hydraulic')"></div>
-        <div class="sub-panel-zone" id="electrical-zone" onclick="showPopup('electrical')"></div>
+        <div class="panel-zone" id="zone-capt-reset" onclick="showPopup('capt-reset')">
+            <div class="zone-label">CAPT RESET</div>
+            <div class="zone-fin">1231VM</div>
+        </div>
+        <div class="panel-zone" id="zone-fo-reset" onclick="showPopup('fo-reset')">
+            <div class="zone-label">FO RESET / CABIN CAM / NSS</div>
+            <div class="zone-fin">1222VM</div>
+        </div>
+        <div class="panel-zone" id="zone-gnd-hyd" onclick="showPopup('gnd-hyd')">
+            <div class="zone-label">GND HYD</div>
+            <div class="zone-fin">1255VM</div>
+        </div>
+        <div class="panel-zone" id="zone-adj-light" onclick="showPopup('adj-light')">
+            <div class="zone-label">ADJ LIGHT</div>
+            <div class="zone-fin">1252VU</div>
+        </div>
+        <div class="panel-zone" id="zone-apu" onclick="showPopup('apu')">
+            <div class="zone-label">APU</div>
+            <div class="zone-fin">1221VM</div>
+        </div>
+        <div class="panel-zone" id="zone-adirs" onclick="showPopup('adirs')">
+            <div class="zone-label">ADIRS / ELT</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-capt-fctl" onclick="showPopup('capt-fctl')">
+            <div class="zone-label">CAPT F/CTL · FUEL · EVAC · WIPER</div>
+            <div class="zone-fin">1211VM</div>
+        </div>
+        <div class="panel-zone" id="zone-eng-fire" onclick="showPopup('eng-fire')">
+            <div class="zone-label">ENG FIRE</div>
+            <div class="zone-fin">1245VM</div>
+        </div>
+        <div class="panel-zone" id="zone-hyd-fuel" onclick="showPopup('hyd-fuel')">
+            <div class="zone-label">GREEN &amp; YELLOW HYD · FUEL</div>
+            <div class="zone-fin">1235VM</div>
+        </div>
+        <div class="panel-zone" id="zone-elec-air" onclick="showPopup('elec-air')">
+            <div class="zone-label">ELEC · AIR</div>
+            <div class="zone-fin">1225VM</div>
+        </div>
+        <div class="panel-zone" id="zone-anti-ice" onclick="showPopup('anti-ice')">
+            <div class="zone-label">ANTI ICE · ENG START · CABIN PRESS</div>
+            <div class="zone-fin">1215VM</div>
+        </div>
+        <div class="panel-zone" id="zone-cvr" onclick="showPopup('cvr')">
+            <div class="zone-label">CVR</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-rmp" onclick="showPopup('rmp')">
+            <div class="zone-label">RMP</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-fo-fctl" onclick="showPopup('fo-fctl')">
+            <div class="zone-label">FO F/CTL · CARGO · VENT · ENG · WIPER</div>
+            <div class="zone-fin">1212VM</div>
+        </div>
     </div>
 
-    <!-- ── POPUPS ── -->
     <div id="dark-screen" class="overlay-screen" onclick="closeAllPopups()"></div>
 
-    <div id="popup-apu-fire" class="popup-box">
-        <button class="close-btn" onclick="closeAllPopups()">X</button>
-        <h3>APU Fire Control Panel</h3>
-        <div class="part-number"><strong>Part No:</strong> P/N 380-APU-9921-A</div>
-        <p>Controls the auxiliary power unit fire extinguishing squibs and warning horn resets.</p>
-        <div class="custom-note"><strong>Note:</strong> Check status light matches lower ECAM page.</div>
+    <div id="popup-capt-reset" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Capt. Reset Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1231VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>PACK · CPCS · AVS · VCS · SCS · ATC · FMC-A · FMC-C · SLATS · FLAPS · TR · ABIT · AESU · FWS · DCU · FQMS · LGCS · BSCS · SDF · ACU · CDS · ENG</strong> reset pushbuttons for Captain side systems.
+        </div>
+    </div>
+
+    <div id="popup-fo-reset" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FO Reset / Cabin Camera / NSS Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1222VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>PACK · CPCS · AVS · VCS · FMC-B · SLATS · FLAPS</strong> reset pushbuttons for FO side, plus <strong>CABIN LANDSCAPE CAMERA</strong> control and <strong>NSS (NSS DATA TO ACMS)</strong> panel.
+        </div>
+    </div>
+
+    <div id="popup-gnd-hyd" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>GND HYD Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1255VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>OXYGEN · ELEC PMP A/B (GREEN) · ELEC PMP A/B (YELLOW) · FUEL · BAT · APU · ENG · MAINT · ELEC · NGS · AIR · VENT</strong> ground hydraulic and aircraft systems controls. Also includes <strong>GND HF · AUTO DATA/LINK · CPKT DOOR</strong> controls.
+        </div>
+    </div>
+
+    <div id="popup-adj-light" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Adjustable Light</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1252VU</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Overhead <strong>adjustable cockpit lighting unit</strong>. Controls ambient ceiling illumination level for the overhead panel area.
+        </div>
+    </div>
+
+    <div id="popup-apu" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>APU Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1221VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">XXX</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Controls the <strong>Auxiliary Power Unit</strong>. Contains <strong>APU MASTER SW · APU START · AGENT</strong> fire extinguisher pushbutton. Also houses the <strong>ELT (Emergency Locator Transmitter)</strong> armed/test switch.
+        </div>
     </div>
 
     <div id="popup-adirs" class="popup-box">
-        <button class="close-btn" onclick="closeAllPopups()">X</button>
-        <h3>ADIRS Panel (Air Data Inertial Reference)</h3>
-        <div class="part-number"><strong>Part No:</strong> P/N 380-ADR-1104-B</div>
-        <p>Provides position, attitude, and air data reference computing to the primary flight data screens.</p>
-        <div class="custom-note"><strong>Note:</strong> Alignment takes approximately 10 minutes.</div>
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>ADIRS Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Air Data Inertial Reference System</strong>. Contains <strong>ADR 1 · ADR 2 · ADR 3 · IR 1 · IR 2 · IR 3</strong> selector knobs and <strong>ON BAT</strong> indicator. Alignment takes approximately <strong>10 minutes</strong>. Also contains <strong>PROBE &amp; WINDOW HEAT</strong> controls.
+        </div>
     </div>
 
-    <div id="popup-hydraulic" class="popup-box">
-        <button class="close-btn" onclick="closeAllPopups()">X</button>
-        <h3>Hydraulic Power Management</h3>
-        <div class="part-number"><strong>Part No:</strong> P/N 380-HYD-5520-C</div>
-        <p>Monitors Green and Yellow engine-driven pump pressure architectures.</p>
-        <div class="custom-note"><strong>Note:</strong> Normal operating system pressure limits sit at 5000 PSI.</div>
+    <div id="popup-capt-fctl" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Capt F/CTL · EMER FUEL · EVAC · WIPER Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1211VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>F/CTL (PRIM 1–3 · SEC 1–2)</strong>, <strong>EMER OUTR TK XFB · FUEL JETTISON ARM/ACTIVE</strong>, <strong>RCDR GND CMD · EVAC COMMAND / HORN OFF</strong>, <strong>EMER ELEC PWR · RAT MAN ON · MASTER SW · ENTERTAINMENT</strong>, <strong>OXYGEN MASK MAN ON · CREW SUPPLY · PAX</strong>, <strong>CALLS · DECK</strong> selectors, and <strong>WIPER</strong> control.
+        </div>
     </div>
 
-    <div id="popup-electrical" class="popup-box">
-        <button class="close-btn" onclick="closeAllPopups()">X</button>
-        <h3>Main Electrical Control Panel</h3>
-        <div class="part-number"><strong>Part No:</strong> P/N 380-ELE-4400-X</div>
-        <p>Manages battery connectors, external power initialization feeds, and generator line contactors.</p>
-        <div class="custom-note"><strong>Note:</strong> Keep EXT PWR ON until engines take over loads.</div>
+    <div id="popup-eng-fire" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>ENG Fire Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1245VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains fire handles and extinguisher controls for <strong>ENG 1 · ENG 2 · ENG 3 · ENG 4</strong>. Each engine has <strong>AGENT 1 &amp; AGENT 2</strong> discharge pushbuttons and a <strong>TEST</strong> button. APU fire handle also located in this panel.
+        </div>
+    </div>
+
+    <div id="popup-hyd-fuel" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>GREEN &amp; YELLOW HYD · FUEL Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1235VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Hydraulic:</strong> GREEN system (ENG 1–4 pumps A/B) and YELLOW system (ENG 1–4 pumps A/B) with RAT indication.<br><br>
+            <strong>Fuel:</strong> CROSSFEED 1–4 valves, FEED TK 1–4, MID TK, TRIM TK controls, OUTR TK XFR, ISO controls.
+        </div>
+    </div>
+
+    <div id="popup-elec-air" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>ELEC &amp; AIR Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1225VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Electrical:</strong> BAT 1 · ESS BAT · BAT 2 · APU BAT, AC BUS 1–4, BUS TIE, APU GEN A/B, DRIVE 1–4 / GEN 1–4, ELMU, ACCESS, PAX SYS, GALLEY, COMMERCIAL.<br><br>
+            <strong>Air:</strong> AIRFLOW NORM, HOT AIR 1–2, RAM AIR, CABIN controls, PACK 1–2, ENG 1–4 BLEED, APU BLEED, ABLEED valves and CABIN EXTRACT.
+        </div>
+    </div>
+
+    <div id="popup-anti-ice" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>ANTI ICE · ENG START · CABIN PRESS Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1215VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Anti Ice:</strong> WING and ENG 1–4 anti-ice switches.<br><br>
+            <strong>ENG Start:</strong> CRANK · NORM · START controls, APU cross-bleed start selector.<br><br>
+            <strong>Cabin Press:</strong> CABIN ALT and CABIN V/S mode selectors.<br><br>
+            <strong>Ext / Int Lights:</strong> STROBE · BEACON · NAV · LOGO · WING · NOSE · LAND · TAXI, INT LT STORM · ANN LT.<br><br>
+            <strong>Signs:</strong> SEAT BELTS · NO MOBILE · EMER EXIT LT.
+        </div>
+    </div>
+
+    <div id="popup-cvr" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>CVR Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Cockpit Voice Recorder</strong> control panel. Contains <strong>TEST · ERASE · GND CTL</strong> pushbuttons. No FIN or P/N assigned in this reference.
+        </div>
+    </div>
+
+    <div id="popup-rmp" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>RMP Panel (Observer)</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">RMP8000AA120101</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">4112-0243</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Radio Management Panel — Observer position</strong>. Contains <strong>VHF · HF · TEL · SQWK · MENU · NAV</strong> frequency and communication management controls.
+        </div>
+    </div>
+
+    <div id="popup-fo-fctl" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FO F/CTL · Cargo AIR COND · Cargo SMOKE · VENT · ENG · Right WIPER Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1212VM</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>F/CTL (PRIM 2 · SEC 2)</strong>, <strong>CARGO AIR COND (ISOL VALVES · TEMP REGUL · HEATER)</strong>, <strong>CARGO SMOKE (AGENT TO FWD / AFT · TEST)</strong>, <strong>VENT (AVNCS · EXTRACT · CAB FANS · LOGOS)</strong>, <strong>ENG (MAIN 1–2 · START 1–4 · ALTN MODE)</strong>, and <strong>WIPER</strong> (FO side).
+        </div>
     </div>
 
     <!-- ── PARTS TABLE ── -->
@@ -180,17 +403,14 @@
     </div>
 
     <script>
-        function showPopup(panelId) {
+        function showPopup(id) {
             closeAllPopups();
             document.getElementById('dark-screen').style.display = 'block';
-            document.getElementById('popup-' + panelId).style.display = 'block';
+            document.getElementById('popup-' + id).style.display = 'block';
         }
         function closeAllPopups() {
             document.getElementById('dark-screen').style.display = 'none';
-            var popups = document.getElementsByClassName('popup-box');
-            for (var i = 0; i < popups.length; i++) {
-                popups[i].style.display = 'none';
-            }
+            document.querySelectorAll('.popup-box').forEach(p => p.style.display = 'none');
         }
         function filterTable(inputId, tableId) {
             const input = document.getElementById(inputId).value.toLowerCase();
