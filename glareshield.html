@@ -16,12 +16,107 @@
         .back-link:hover { text-decoration: underline; }
         h1 { color: #ffffff; margin-bottom: 5px; }
         .subtitle { color: #94a3b8; margin-bottom: 25px; }
+
         .image-container {
-            max-width: 100%; border: 3px solid #374151;
-            border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            overflow: hidden; margin-bottom: 35px;
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+            border: 3px solid #374151;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden;
+            margin-bottom: 35px;
         }
         img { max-width: 100%; height: auto; display: block; }
+
+        .panel-zone {
+            position: absolute;
+            background: rgba(100, 116, 139, 0.18);
+            border: 1.5px solid rgba(148, 163, 184, 0.45);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4px;
+            overflow: hidden;
+        }
+        .panel-zone:hover {
+            background: rgba(56, 189, 248, 0.22);
+            border-color: #38bdf8;
+        }
+        .panel-zone .zone-label {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.6em;
+            font-weight: 600;
+            line-height: 1.3;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+        }
+        .panel-zone .zone-fin {
+            color: #fbbf24;
+            font-size: 0.52em;
+            font-family: monospace;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+            margin-top: 2px;
+        }
+
+        #zone-efis-capt     { top: 2%;  left: 4%;    width: 18%;  height: 28%; }
+        #zone-afs           { top: 2%;  left: 27%;   width: 46%;  height: 28%; }
+        #zone-efis-fo       { top: 2%;  left: 78%;   width: 18%;  height: 28%; }
+        #zone-capt-spk      { top: 30%; left: 0.5%;  width: 5%;   height: 35%; }
+        #zone-capt-pfd      { top: 30%; left: 6%;    width: 14%;  height: 55%; }
+        #zone-capt-nd       { top: 30%; left: 21%;   width: 14%;  height: 55%; }
+        #zone-fms1          { top: 30%; left: 36%;   width: 8%;   height: 38%; }
+        #zone-centre-misc   { top: 30%; left: 44%;   width: 12%;  height: 55%; }
+        #zone-upper-eicas   { top: 30%; left: 57%;   width: 8%;   height: 38%; }
+        #zone-centre-right  { top: 30%; left: 65%;   width: 8%;   height: 55%; }
+        #zone-fo-nd         { top: 30%; left: 73%;   width: 14%;  height: 55%; }
+        #zone-fo-pfd        { top: 30%; left: 87%;   width: 7.5%; height: 55%; }
+        #zone-fo-spk        { top: 30%; left: 94.5%; width: 5%;   height: 35%; }
+        #zone-lower-capt    { top: 63%; left: 31%;   width: 14%;  height: 35%; }
+        #zone-lower-eicas   { top: 63%; left: 46%;   width: 19%;  height: 35%; }
+        #zone-lower-fo      { top: 63%; left: 66%;   width: 14%;  height: 35%; }
+
+        .overlay-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 99;
+        }
+        .popup-box {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f2937;
+            border: 2px solid #38bdf8;
+            padding: 22px 25px;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.9);
+            z-index: 100;
+            width: 92%; max-width: 420px;
+        }
+        .popup-box h3 { margin: 0 0 12px 0; color: #38bdf8; font-size: 1em; padding-right: 30px; }
+        .popup-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 0.85em; }
+        .popup-row .label { color: #94a3b8; min-width: 40px; }
+        .popup-row .value { font-family: monospace; color: #f97316; }
+        .popup-row .value.sn { color: #a3e635; }
+        .popup-divider { border: none; border-top: 1px solid #374151; margin: 12px 0; }
+        .popup-contents { font-size: 0.82em; color: #cbd5e1; line-height: 1.6; }
+        .popup-contents strong { color: #fbbf24; }
+        .close-btn {
+            position: absolute; top: 12px; right: 12px;
+            background: #374151; color: white; border: none;
+            padding: 4px 9px; cursor: pointer; border-radius: 4px; font-size: 0.85em;
+        }
+        .close-btn:hover { background: #ef4444; }
+
         .parts-section { width: 100%; max-width: 900px; }
         .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
         .search-box {
@@ -42,36 +137,302 @@
     </style>
 </head>
 <body>
+
     <a href="index.html" class="back-link">← Back to Full Cockpit</a>
     <h1>Glareshield &amp; Main Panel</h1>
-    <p class="subtitle">Primary display units (PFD/ND), FCU, MFDs and OIT table assemblies.</p>
+    <p class="subtitle">Click any panel zone to view its FIN, P/N and contents. Scroll down for the full parts index.</p>
 
     <div class="image-container">
-        <img src="glaremain.png" alt="Glareshield Close-Up">
+        <img src="glaremain.png" alt="Glareshield & Main Panel">
+
+        <div class="panel-zone" id="zone-efis-capt" onclick="showPopup('efis-capt')">
+            <div class="zone-label">EFIS CAPT</div>
+            <div class="zone-fin">1411VU</div>
+        </div>
+        <div class="panel-zone" id="zone-afs" onclick="showPopup('afs')">
+            <div class="zone-label">AFS — AUTO FLIGHT SYSTEM</div>
+            <div class="zone-fin">FCU</div>
+        </div>
+        <div class="panel-zone" id="zone-efis-fo" onclick="showPopup('efis-fo')">
+            <div class="zone-label">EFIS FO</div>
+            <div class="zone-fin">1412VU</div>
+        </div>
+        <div class="panel-zone" id="zone-capt-spk" onclick="showPopup('capt-spk')">
+            <div class="zone-label">CAPT SPK / PTT</div>
+            <div class="zone-fin">1413VU</div>
+        </div>
+        <div class="panel-zone" id="zone-capt-pfd" onclick="showPopup('capt-pfd')">
+            <div class="zone-label">CAPT PFD</div>
+            <div class="zone-fin">MFD L1</div>
+        </div>
+        <div class="panel-zone" id="zone-capt-nd" onclick="showPopup('capt-nd')">
+            <div class="zone-label">CAPT ND</div>
+            <div class="zone-fin">MFD L2</div>
+        </div>
+        <div class="panel-zone" id="zone-fms1" onclick="showPopup('fms1')">
+            <div class="zone-label">FMS 1</div>
+            <div class="zone-fin">MFD L3</div>
+        </div>
+        <div class="panel-zone" id="zone-centre-misc" onclick="showPopup('centre-misc')">
+            <div class="zone-label">SWITCHING · AIR DATA · FWS</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-upper-eicas" onclick="showPopup('upper-eicas')">
+            <div class="zone-label">UPPER EICAS</div>
+            <div class="zone-fin">MFD C1</div>
+        </div>
+        <div class="panel-zone" id="zone-centre-right" onclick="showPopup('centre-right')">
+            <div class="zone-label">COMPASS · AUTO BRK · L/G</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-fo-nd" onclick="showPopup('fo-nd')">
+            <div class="zone-label">FO ND</div>
+            <div class="zone-fin">MFD R2</div>
+        </div>
+        <div class="panel-zone" id="zone-fo-pfd" onclick="showPopup('fo-pfd')">
+            <div class="zone-label">FO PFD</div>
+            <div class="zone-fin">MFD R1</div>
+        </div>
+        <div class="panel-zone" id="zone-fo-spk" onclick="showPopup('fo-spk')">
+            <div class="zone-label">FO SPK / PTT</div>
+            <div class="zone-fin">1414VU</div>
+        </div>
+        <div class="panel-zone" id="zone-lower-capt" onclick="showPopup('lower-capt')">
+            <div class="zone-label">FMS 2 (CAPT)</div>
+            <div class="zone-fin">MFD L3 lower</div>
+        </div>
+        <div class="panel-zone" id="zone-lower-eicas" onclick="showPopup('lower-eicas')">
+            <div class="zone-label">LOWER EICAS / SD</div>
+            <div class="zone-fin">MFD C2</div>
+        </div>
+        <div class="panel-zone" id="zone-lower-fo" onclick="showPopup('lower-fo')">
+            <div class="zone-label">FMS 2 (FO)</div>
+            <div class="zone-fin">MFD R3</div>
+        </div>
     </div>
 
+    <div id="dark-screen" class="overlay-screen" onclick="closeAllPopups()"></div>
+
+    <div id="popup-efis-capt" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>EFIS Control Panel — Captain</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1411VU</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Captain's <strong>Electronic Flight Instrument System</strong> control panel. Contains <strong>BARO REF selector · CHRONO · FD · LS · CSTR · WPT · VORD · NDB · ARPT</strong> range and mode selections for PFD and ND. Also includes <strong>SIDESTICK PRIORITY</strong> indicator.
+        </div>
+    </div>
+
+    <div id="popup-afs" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>AFS — Auto Flight System (FCU)</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Flight Control Unit</strong> — central autopilot and autothrust management panel. Contains <strong>SPD/MACH · HDG/TRK · ALT · V/S-FPA</strong> windows and knobs, <strong>AP1 · AP2 · A/THR · EXPED · APPR · LOC · ALT</strong> pushbuttons.
+        </div>
+    </div>
+
+    <div id="popup-efis-fo" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>EFIS Control Panel — First Officer</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1412VU</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            First Officer's <strong>Electronic Flight Instrument System</strong> control panel. Mirror of Capt EFIS — contains <strong>BARO REF selector · CHRONO · FD · LS · CSTR · WPT · VORD · NDB · ARPT</strong> range and mode selections. Also includes <strong>SIDESTICK PRIORITY</strong> indicator (FO side).
+        </div>
+    </div>
+
+    <div id="popup-capt-spk" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Capt Loud Speaker Controller &amp; Radio PTT</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1413VU</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Captain side <strong>loud speaker volume controller</strong> and <strong>Radio Push-To-Talk (PTT)</strong> switch panel. Controls audio output level to the cockpit speaker and enables radio transmission from the glareshield area.
+        </div>
+    </div>
+
+    <div id="popup-capt-pfd" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Captain PFD — MFD L1</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD L1</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000193</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Primary Flight Display — Captain</strong>. Displays airspeed, altitude, attitude, vertical speed, heading, and flight mode annunciations. Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <div id="popup-capt-nd" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Captain ND — MFD L2</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD L2</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000155</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Navigation Display — Captain</strong>. Displays aircraft position, flight plan, weather radar, TCAS traffic, and terrain data. Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <div id="popup-fms1" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FMS 1 — Capt MCDU (MFD L3)</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD L3</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000196</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Flight Management System — Captain MCDU display</strong>. Used for flight plan entry, performance calculations, and navigation database management. Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <div id="popup-centre-misc" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Centre Panel — SWITCHING · AIR DATA · FWS</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>SWITCHING panel</strong> (display source switching), <strong>AIR DATA</strong> source selector, <strong>FWS (Flight Warning System)</strong> MENU/RCL controls, and <strong>L/G CTL</strong> landing gear lever. Also includes the <strong>OIT sliding table</strong> stowage area.
+        </div>
+    </div>
+
+    <div id="popup-upper-eicas" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Upper EICAS / EWD — MFD C1</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD C1</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000194</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Engine Warning Display (EWD) — Upper EICAS</strong>. Displays engine parameters (N1, EGT, N2, FF), warning messages, and memo items. Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <div id="popup-centre-right" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Centre Right — Compass · AUTO BRK · L/G</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains the <strong>Standby Compass</strong>, <strong>AUTO BRK</strong> selector (LO · MED · MAX · RTO), <strong>BRK FAN</strong> switch, <strong>A-SKID</strong> anti-skid selector, and <strong>L/G</strong> gravity extension controls. Also includes <strong>VHF / CHB</strong> audio selectors.
+        </div>
+    </div>
+
+    <div id="popup-fo-nd" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FO Navigation Display — MFD R2</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD R2</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000191</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Navigation Display — First Officer</strong>. Displays aircraft position, flight plan, weather radar, TCAS traffic, and terrain data. Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <div id="popup-fo-pfd" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FO Primary Flight Display — MFD R1</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD R1</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000198</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Primary Flight Display — First Officer</strong>. Displays airspeed, altitude, attitude, vertical speed, heading, and flight mode annunciations. Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <div id="popup-fo-spk" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FO Loud Speaker Controller &amp; Radio PTT</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1414VU</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            First Officer side <strong>loud speaker volume controller</strong> and <strong>Radio Push-To-Talk (PTT)</strong> switch panel. Controls audio output level to the cockpit speaker and enables radio transmission from the glareshield area (FO side).
+        </div>
+    </div>
+
+    <div id="popup-lower-capt" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FMS 2 — Capt Lower MFD</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD L3</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000196</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Captain lower MFD</strong> — secondary FMS display. Used for flight plan entry and FMS page access from the lower instrument panel position.
+        </div>
+    </div>
+
+    <div id="popup-lower-eicas" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Lower EICAS / SD — MFD C2</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD C2</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000190</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>System Display (SD) — Lower EICAS</strong>. Displays aircraft systems synoptic pages including hydraulics, fuel, electrical, bleed air, pressurisation, and maintenance data. Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <div id="popup-lower-fo" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>FMS 2 — FO Lower MFD (MFD R3)</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">MFD R3</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C19596AC04</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C19596000839</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>FO lower MFD</strong> — FO MCDU / FMS display. Used for flight plan entry and FMS page access from the lower instrument panel (FO side). Thales Avionics MFD unit.
+        </div>
+    </div>
+
+    <!-- ── PARTS TABLE ── -->
     <div class="parts-section">
-        <h2>Parts Index</h2>
+        <h2>Glareshield &amp; Main Panel — Parts Index</h2>
         <input class="search-box" type="text" id="searchGlareshield" onkeyup="filterTable('searchGlareshield','glareshieldTable')" placeholder="Search description, P/N or S/N...">
         <table id="glareshieldTable">
-            <thead><tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr></thead>
+            <thead>
+                <tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr>
+            </thead>
             <tbody>
                 <tr><td>Light - Sliding Table Capt</td><td class="pn">D947-43-001-002</td><td class="sn">947-43-0103</td></tr>
                 <tr><td>Light - Sliding Table FO</td><td class="pn">D947-53-001-003</td><td class="sn">947-53-0238</td></tr>
-                <tr><td>Capt. PFD</td><td class="pn">C19596AC04</td><td class="sn">C19596000193</td></tr>
-                <tr><td>Capt. ND</td><td class="pn">C19596AC04</td><td class="sn">C19596000155</td></tr>
-                <tr><td>Capt. FMS<td class="pn">C19596AC04</td><td class="sn">C19596000196</td></tr>
-                <tr><td>Upper EICAS</td><td class="pn">C19596AC04</td><td class="sn">C19596000194</td></tr>
-                <tr><td>Lower EICAS </td><td class="pn">C19596AC04</td><td class="sn">C19596000190</td></tr>
-                <tr><td>FO. PFD</td><td class="pn">C19596AC04</td><td class="sn">C19596000198</td></tr>
-                <tr><td>FO. ND</td><td class="pn">C19596AC04</td><td class="sn">C19596000191</td></tr>
-                <tr><td>FO. FMS</td><td class="pn">C19596AC04</td><td class="sn">C19596000839</td></tr>
+                <tr><td>MFD L1 — Capt PFD</td><td class="pn">C19596AC04</td><td class="sn">C19596000193</td></tr>
+                <tr><td>MFD L2 — Capt ND</td><td class="pn">C19596AC04</td><td class="sn">C19596000155</td></tr>
+                <tr><td>MFD L3 — Capt FMS</td><td class="pn">C19596AC04</td><td class="sn">C19596000196</td></tr>
+                <tr><td>MFD C1 — Upper EICAS (EWD)</td><td class="pn">C19596AC04</td><td class="sn">C19596000194</td></tr>
+                <tr><td>MFD C2 — Lower EICAS (SD)</td><td class="pn">C19596AC04</td><td class="sn">C19596000190</td></tr>
+                <tr><td>MFD R1 — FO PFD</td><td class="pn">C19596AC04</td><td class="sn">C19596000198</td></tr>
+                <tr><td>MFD R2 — FO ND</td><td class="pn">C19596AC04</td><td class="sn">C19596000191</td></tr>
+                <tr><td>MFD R3 — FO FMS</td><td class="pn">C19596AC04</td><td class="sn">C19596000839</td></tr>
                 <tr><td>OIT Table Assembly (MIP FO)</td><td class="pn">L2511075100000</td><td class="sn">MSI10143</td></tr>
                 <tr><td>OIT Table Assembly (MIP Capt)</td><td class="pn">L2511070100000</td><td class="sn">MSI10143</td></tr>
             </tbody>
         </table>
     </div>
+
     <script>
+        function showPopup(id) {
+            closeAllPopups();
+            document.getElementById('dark-screen').style.display = 'block';
+            document.getElementById('popup-' + id).style.display = 'block';
+        }
+        function closeAllPopups() {
+            document.getElementById('dark-screen').style.display = 'none';
+            document.querySelectorAll('.popup-box').forEach(p => p.style.display = 'none');
+        }
         function filterTable(inputId, tableId) {
             const input = document.getElementById(inputId).value.toLowerCase();
             document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
@@ -79,5 +440,6 @@
             });
         }
     </script>
+
 </body>
 </html>
