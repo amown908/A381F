@@ -70,6 +70,7 @@
         #zone-efis-fo       { top: 2%;  left: 78%;   width: 18%;  height: 28%; }
         #zone-capt-spk      { top: 30%; left: 0.5%;  width: 5%;   height: 35%; }
         #zone-capt-pfd      { top: 30%; left: 6%;    width: 14%;  height: 55%; }
+        #zone-capt-light    { top: 30%; left: 6%;    width: 7%;  height: 15%; }
         #zone-capt-nd       { top: 30%; left: 21%;   width: 14%;  height: 55%; }
         #zone-fms1          { top: 30%; left: 36%;   width: 8%;   height: 38%; }
         #zone-centre-misc   { top: 30%; left: 44%;   width: 12%;  height: 55%; }
@@ -153,6 +154,10 @@
             <div class="zone-label">AFS — AUTO FLIGHT SYSTEM</div>
             <div class="zone-fin">FCU</div>
         </div>
+        <div class="panel-zone" id="zone-capt-light" onclick="showPopup('control panel')">
+            <div class="zone-label">DISPLAY UNIT - CONTROL PANEL</div>
+            <div class="zone-fin">1313VU</div>
+        </div>
         <div class="panel-zone" id="zone-efis-fo" onclick="showPopup('efis-fo')">
             <div class="zone-label">EFIS FO</div>
             <div class="zone-fin">1412VU</div>
@@ -217,7 +222,7 @@
         <button class="close-btn" onclick="closeAllPopups()">✕</button>
         <h3>EFIS Control Panel — Captain</h3>
         <div class="popup-row"><span class="label">FIN</span><span class="value">1411VU</span></div>
-        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">MA404572012825 (Schematics)</span></div>
         <hr class="popup-divider">
         <div class="popup-contents">
             Captain's <strong>Electronic Flight Instrument System</strong> control panel. Contains <strong>BARO REF selector · CHRONO · FD · LS · CSTR · WPT · VORD · NDB · ARPT</strong> range and mode selections for PFD and ND. Also includes <strong>SIDESTICK PRIORITY</strong> indicator.
@@ -228,10 +233,20 @@
         <button class="close-btn" onclick="closeAllPopups()">✕</button>
         <h3>AFS — Auto Flight System (FCU)</h3>
         <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
-        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C16455AB (Schematics)</span></div>
         <hr class="popup-divider">
         <div class="popup-contents">
             <strong>Flight Control Unit</strong> — central autopilot and autothrust management panel. Contains <strong>SPD/MACH · HDG/TRK · ALT · V/S-FPA</strong> windows and knobs, <strong>AP1 · AP2 · A/THR · EXPED · APPR · LOC · ALT</strong> pushbuttons.
+        </div>
+    </div>
+    <div id="popup-capt-light" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>DISPLAY UNIT CONTROL PANEL</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">1313VU</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">MA404575012825 (Schematics)</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Display Unit Control Panel</strong> — controls the brightness of the <strong> OIT, PFD, ND & MFD </strong>. It contains <strong>PFD/ND PB </strong> When pressed, it exchanges the onside PFD and the ND, regardless of their default position and a <strong> RECONF PB </strong> where it's used in case of display failure to reconfigure one of the remaining display units to recover the lost display.
         </div>
     </div>
 
@@ -239,7 +254,7 @@
         <button class="close-btn" onclick="closeAllPopups()">✕</button>
         <h3>EFIS Control Panel — First Officer</h3>
         <div class="popup-row"><span class="label">FIN</span><span class="value">1412VU</span></div>
-        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">MA404572022825 (Schematics)</span></div>
         <hr class="popup-divider">
         <div class="popup-contents">
             First Officer's <strong>Electronic Flight Instrument System</strong> control panel. Mirror of Capt EFIS — contains <strong>BARO REF selector · CHRONO · FD · LS · CSTR · WPT · VORD · NDB · ARPT</strong> range and mode selections. Also includes <strong>SIDESTICK PRIORITY</strong> indicator (FO side).
@@ -250,7 +265,7 @@
         <button class="close-btn" onclick="closeAllPopups()">✕</button>
         <h3>Capt Loud Speaker Controller &amp; Radio PTT</h3>
         <div class="popup-row"><span class="label">FIN</span><span class="value">1413VU</span></div>
-        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">MA404571012825 (Schematics)</span></div>
         <hr class="popup-divider">
         <div class="popup-contents">
             Captain side <strong>loud speaker volume controller</strong> and <strong>Radio Push-To-Talk (PTT)</strong> switch panel. Controls audio output level to the cockpit speaker and enables radio transmission from the glareshield area.
@@ -355,7 +370,7 @@
         <button class="close-btn" onclick="closeAllPopups()">✕</button>
         <h3>FO Loud Speaker Controller &amp; Radio PTT</h3>
         <div class="popup-row"><span class="label">FIN</span><span class="value">1414VU</span></div>
-        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">MA404571022825 (Schematics)</span></div>
         <hr class="popup-divider">
         <div class="popup-contents">
             First Officer side <strong>loud speaker volume controller</strong> and <strong>Radio Push-To-Talk (PTT)</strong> switch panel. Controls audio output level to the cockpit speaker and enables radio transmission from the glareshield area (FO side).
