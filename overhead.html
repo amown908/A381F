@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A380 Overhead Panel Close-Up Guide</title>
+    <title>Overhead Panel — A380 Flight Deck</title>
     <style>
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background: #111827; 
-            color: #f3f4f6; 
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #1e1e24; color: #e2e8f0;
+            margin: 0; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
         }
-        h1 { margin-bottom: 5px; }
-        .subtitle { color: #9ca3af; margin-bottom: 20px; }
-        .back-link { color: #38bdf8; text-decoration: none; margin-bottom: 15px; font-weight: bold; }
+        .back-link { align-self: flex-start; color: #38bdf8; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+        .back-link:hover { text-decoration: underline; }
+        h1 { color: #ffffff; margin-bottom: 5px; }
+        .subtitle { color: #94a3b8; margin-bottom: 25px; }
 
-        /* Container for the dedicated close-up overhead image */
-        .image-container { 
-            position: relative; 
-            display: inline-block; 
+        /* ── IMAGE + CLICKABLE ZONES ── */
+        .image-container {
+            position: relative;
+            display: inline-block;
             max-width: 100%;
             border: 3px solid #374151;
-            border-radius: 4px;
+            border-radius: 6px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden;
+            margin-bottom: 35px;
         }
         img { max-width: 100%; height: auto; display: block; }
-        
-        /* Interactive clickable zones over the sub-panels */
+
         .sub-panel-zone {
             position: absolute;
             border: 2px solid transparent;
@@ -38,22 +37,20 @@
             transition: all 0.2s ease-in-out;
         }
         .sub-panel-zone:hover {
-            background: rgba(234, 179, 8, 0.25); /* Gold tint on hover */
+            background: rgba(234, 179, 8, 0.25);
             border-color: #eab308;
         }
 
-        /* COORDINATES PRECISION MAPPED TO THE OVERHEAD GRID IMAGE */
         #apu-fire-zone   { top: 2%;   left: 36.8%; width: 26.4%; height: 11.5%; }
         #adirs-zone      { top: 15%;  left: 2.8%;  width: 32.2%; height: 22.5%; }
         #hydraulic-zone  { top: 56%;  left: 2.8%;  width: 32.2%; height: 20.5%; }
         #electrical-zone { top: 56%;  left: 36.8%; width: 26.4%; height: 26.5%; }
 
-        /* POPUP MODAL STYLING */
+        /* ── POPUP ── */
         .popup-box {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             background: #1f2937;
             border: 2px solid #38bdf8;
@@ -61,25 +58,14 @@
             border-radius: 8px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
             z-index: 100;
-            width: 90%;
-            max-width: 400px;
+            width: 90%; max-width: 400px;
             text-align: left;
         }
         .popup-box h3 { margin-top: 0; color: #38bdf8; }
         .part-number { font-size: 1.1em; color: #f97316; font-family: monospace; margin: 10px 0; }
-        .custom-note { font-style: italic; color: #fbbf24; margin-top: 10px; background: #111827; padding: 10px; border-radius: 4px;}
-        
-        .close-btn {
-            float: right;
-            background: #374151;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+        .custom-note { font-style: italic; color: #fbbf24; margin-top: 10px; background: #111827; padding: 10px; border-radius: 4px; }
+        .close-btn { float: right; background: #374151; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
         .close-btn:hover { background: #ef4444; }
-
         .overlay-screen {
             display: none;
             position: fixed;
@@ -87,23 +73,44 @@
             background: rgba(0,0,0,0.75);
             z-index: 99;
         }
+
+        /* ── PARTS TABLE ── */
+        .parts-section { width: 100%; max-width: 900px; }
+        .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
+        .search-box {
+            width: 100%; padding: 10px; margin-bottom: 15px;
+            background: #1f2937; border: 1px solid #374151;
+            border-radius: 6px; color: #f3f4f6; font-size: 0.9em;
+        }
+        .search-box:focus { outline: none; border-color: #38bdf8; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        thead tr { background: #1a202c; color: #38bdf8; text-align: left; }
+        th { padding: 12px 15px; border-bottom: 2px solid #38bdf8; }
+        td { padding: 10px 15px; border-bottom: 1px solid #374151; }
+        tbody tr:nth-child(even) { background: #1f2937; }
+        tbody tr:hover { background: #263348; }
+        .pn { font-family: monospace; color: #f97316; }
+        .sn { font-family: monospace; color: #a3e635; }
+        .na { color: #6b7280; font-style: italic; }
     </style>
 </head>
 <body>
 
     <a href="index.html" class="back-link">← Back to Full Cockpit</a>
-    <h1>A380 Overhead Panel Control Hub</h1>
-    <p class="subtitle">Click on any specific system panel to view its P/N and custom configuration notes.</p>
+    <h1>Overhead Panel</h1>
+    <p class="subtitle">Click on a sub-panel to view its details. Scroll down for the full parts index.</p>
 
+    <!-- ── OVERHEAD IMAGE WITH CLICKABLE ZONES ── -->
     <div class="image-container">
-        <img src="https://docs.flybywiresim.com/assets/images/pilots-corner/a380x/a380x-briefing/flight-deck/overviews/ovhd/ovhd_overview.png" alt="A380 Overhead Panel Close-Up">
+        <img src="overhead.png" alt="A380 Overhead Panel">
 
-        <div class="sub-panel-zone" id="apu-fire-zone" onclick="showPopup('apu-fire')"></div>
-        <div class="sub-panel-zone" id="adirs-zone" onclick="showPopup('adirs')"></div>
-        <div class="sub-panel-zone" id="hydraulic-zone" onclick="showPopup('hydraulic')"></div>
+        <div class="sub-panel-zone" id="apu-fire-zone"   onclick="showPopup('apu-fire')"></div>
+        <div class="sub-panel-zone" id="adirs-zone"      onclick="showPopup('adirs')"></div>
+        <div class="sub-panel-zone" id="hydraulic-zone"  onclick="showPopup('hydraulic')"></div>
         <div class="sub-panel-zone" id="electrical-zone" onclick="showPopup('electrical')"></div>
     </div>
 
+    <!-- ── POPUPS ── -->
     <div id="dark-screen" class="overlay-screen" onclick="closeAllPopups()"></div>
 
     <div id="popup-apu-fire" class="popup-box">
@@ -111,7 +118,7 @@
         <h3>APU Fire Control Panel</h3>
         <div class="part-number"><strong>Part No:</strong> P/N 380-APU-9921-A</div>
         <p>Controls the auxiliary power unit fire extinguishing squibs and warning horn resets.</p>
-        <div class="custom-note"><strong>My Sentence:</strong> Check status light matches lower ECAM page.</div>
+        <div class="custom-note"><strong>Note:</strong> Check status light matches lower ECAM page.</div>
     </div>
 
     <div id="popup-adirs" class="popup-box">
@@ -119,7 +126,7 @@
         <h3>ADIRS Panel (Air Data Inertial Reference)</h3>
         <div class="part-number"><strong>Part No:</strong> P/N 380-ADR-1104-B</div>
         <p>Provides position, attitude, and air data reference computing to the primary flight data screens.</p>
-        <div class="custom-note"><strong>My Sentence:</strong> Alignment takes approximately 10 minutes.</div>
+        <div class="custom-note"><strong>Note:</strong> Alignment takes approximately 10 minutes.</div>
     </div>
 
     <div id="popup-hydraulic" class="popup-box">
@@ -127,7 +134,7 @@
         <h3>Hydraulic Power Management</h3>
         <div class="part-number"><strong>Part No:</strong> P/N 380-HYD-5520-C</div>
         <p>Monitors Green and Yellow engine-driven pump pressure architectures.</p>
-        <div class="custom-note"><strong>My Sentence:</strong> Normal operating system pressure limits sit at 5000 PSI.</div>
+        <div class="custom-note"><strong>Note:</strong> Normal operating system pressure limits sit at 5000 PSI.</div>
     </div>
 
     <div id="popup-electrical" class="popup-box">
@@ -135,7 +142,41 @@
         <h3>Main Electrical Control Panel</h3>
         <div class="part-number"><strong>Part No:</strong> P/N 380-ELE-4400-X</div>
         <p>Manages battery connectors, external power initialization feeds, and generator line contactors.</p>
-        <div class="custom-note"><strong>My Sentence:</strong> Keep EXT PWR ON until engines take over loads.</div>
+        <div class="custom-note"><strong>Note:</strong> Keep EXT PWR ON until engines take over loads.</div>
+    </div>
+
+    <!-- ── PARTS TABLE ── -->
+    <div class="parts-section">
+        <h2>Overhead Panel — Parts Index</h2>
+        <input class="search-box" type="text" id="searchOverhead" onkeyup="filterTable('searchOverhead','overheadTable')" placeholder="Search description, P/N or S/N...">
+        <table id="overheadTable">
+            <thead>
+                <tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Cockpit Area Microphone (CVR)</td><td class="pn">S056-0048-00</td><td class="sn">315151</td></tr>
+                <tr><td>ELT Control Panel</td><td class="na">Not installed</td><td class="na">Not installed</td></tr>
+                <tr><td>ICP 01 (1231vu)</td><td class="pn">171TS10BY02</td><td class="sn">171TS0107</td></tr>
+                <tr><td>ICP 02A (1221vu)</td><td class="pn">181TS10AAY02</td><td class="sn">181TS0107</td></tr>
+                <tr><td>ICP 02B (1211vu)</td><td class="pn">191TS10BCY03</td><td class="sn">191TS0108</td></tr>
+                <tr><td>ICP 03 (1255vu)</td><td class="pn">201TS10ADY02</td><td class="sn">201TS0105</td></tr>
+                <tr><td>ICP 04 (1245vu)</td><td class="pn">211TS10AAY02</td><td class="sn">211TS0105</td></tr>
+                <tr><td>ICP 05 (1235vu)</td><td class="pn">221TS10ABY02</td><td class="sn">221TS0104</td></tr>
+                <tr><td>ICP 06 (1225vu)</td><td class="pn">231TS10ABY02</td><td class="sn">231TS0107</td></tr>
+                <tr><td>ICP 07 (1215vu)</td><td class="pn">241TS10ADY03</td><td class="sn">241TS0105</td></tr>
+                <tr><td>ICP 08 (1222vu)</td><td class="pn">251TS10AEY02</td><td class="sn">251TS0106</td></tr>
+                <tr><td>ICP 09 (1212vu)</td><td class="pn">261TS10AHY03</td><td class="sn">261TS0105</td></tr>
+                <tr><td>Light - Ceiling Strip Left</td><td class="pn">D947-14-001-002</td><td class="sn">947-14-0134</td></tr>
+                <tr><td>Light - Ceiling Strip Right</td><td class="pn">D947-14-001-002</td><td class="sn">947-14-0118</td></tr>
+                <tr><td>Light - Ceiling Strip Centre</td><td class="pn">D947-14-001-002</td><td class="sn">?</td></tr>
+                <tr><td>Light - Eye Reference</td><td class="pn">D947-07-001-001</td><td class="sn">947-07-0017</td></tr>
+                <tr><td>Light Reading Capt</td><td class="pn">D947-05-001-003</td><td class="sn">6194033</td></tr>
+                <tr><td>Light Reading FO</td><td class="pn">D947-15-001-002</td><td class="sn">947-15-0103</td></tr>
+                <tr><td>RAMP - Observer</td><td class="pn">RMP8000AA120101</td><td class="sn">4112-0243</td></tr>
+                <tr><td>Sunvisor Centre</td><td class="pn">160-10864-990</td><td class="na">N/A</td></tr>
+                <tr><td>Sunvisor L&amp;R</td><td class="pn">160-10864-990</td><td class="na">N/A</td></tr>
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -150,6 +191,12 @@
             for (var i = 0; i < popups.length; i++) {
                 popups[i].style.display = 'none';
             }
+        }
+        function filterTable(inputId, tableId) {
+            const input = document.getElementById(inputId).value.toLowerCase();
+            document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
         }
     </script>
 
