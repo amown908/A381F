@@ -16,12 +16,109 @@
         .back-link:hover { text-decoration: underline; }
         h1 { color: #ffffff; margin-bottom: 5px; }
         .subtitle { color: #94a3b8; margin-bottom: 25px; }
+
         .image-container {
-            max-width: 100%; border: 3px solid #374151;
-            border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            overflow: hidden; margin-bottom: 35px;
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+            border: 3px solid #374151;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden;
+            margin-bottom: 35px;
         }
         img { max-width: 100%; height: auto; display: block; }
+
+        .panel-zone {
+            position: absolute;
+            background: rgba(100, 116, 139, 0.18);
+            border: 1.5px solid rgba(148, 163, 184, 0.45);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4px;
+            overflow: hidden;
+        }
+        .panel-zone:hover {
+            background: rgba(56, 189, 248, 0.22);
+            border-color: #38bdf8;
+        }
+        .panel-zone .zone-label {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.6em;
+            font-weight: 600;
+            line-height: 1.3;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+        }
+        .panel-zone .zone-fin {
+            color: #fbbf24;
+            font-size: 0.52em;
+            font-family: monospace;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+            margin-top: 2px;
+        }
+
+        /* ── ZONE COORDINATES (image: 485 x 693px) ── */
+        #zone-rmp-capt      { top: 0%;   left: 2%;   width: 30%;  height: 14%; }
+        #zone-throttle      { top: 0%;   left: 33%;  width: 34%;  height: 25%; }
+        #zone-rmp-fo        { top: 0%;   left: 68%;  width: 30%;  height: 14%; }
+        #zone-kccu-capt     { top: 14%;  left: 2%;   width: 30%;  height: 13%; }
+        #zone-kccu-fo       { top: 14%;  left: 68%;  width: 30%;  height: 13%; }
+        #zone-eng-master    { top: 25%;  left: 25%;  width: 50%;  height: 10%; }
+        #zone-video         { top: 35%;  left: 25%;  width: 50%;  height: 10%; }
+        #zone-printer       { top: 25%;  left: 2%;   width: 22%;  height: 20%; }
+        #zone-cvr           { top: 25%;  left: 76%;  width: 22%;  height: 20%; }
+        #zone-speedbrake    { top: 45%;  left: 2%;   width: 18%;  height: 18%; }
+        #zone-tcas-wxr      { top: 45%;  left: 22%;  width: 56%;  height: 18%; }
+        #zone-flaps         { top: 45%;  left: 80%;  width: 18%;  height: 18%; }
+        #zone-park-brake    { top: 63%;  left: 2%;   width: 22%;  height: 16%; }
+        #zone-rudder-trim   { top: 63%;  left: 26%;  width: 48%;  height: 16%; }
+        #zone-acms          { top: 63%;  left: 76%;  width: 22%;  height: 10%; }
+        #zone-ckpt-door     { top: 73%;  left: 76%;  width: 22%;  height: 16%; }
+        #zone-misc-aft      { top: 79%;  left: 2%;   width: 72%;  height: 10%; }
+
+        .overlay-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 99;
+        }
+        .popup-box {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f2937;
+            border: 2px solid #38bdf8;
+            padding: 22px 25px;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.9);
+            z-index: 100;
+            width: 92%; max-width: 420px;
+        }
+        .popup-box h3 { margin: 0 0 12px 0; color: #38bdf8; font-size: 1em; padding-right: 30px; }
+        .popup-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 0.85em; }
+        .popup-row .label { color: #94a3b8; min-width: 40px; }
+        .popup-row .value { font-family: monospace; color: #f97316; }
+        .popup-row .value.sn { color: #a3e635; }
+        .popup-divider { border: none; border-top: 1px solid #374151; margin: 12px 0; }
+        .popup-contents { font-size: 0.82em; color: #cbd5e1; line-height: 1.6; }
+        .popup-contents strong { color: #fbbf24; }
+        .close-btn {
+            position: absolute; top: 12px; right: 12px;
+            background: #374151; color: white; border: none;
+            padding: 4px 9px; cursor: pointer; border-radius: 4px; font-size: 0.85em;
+        }
+        .close-btn:hover { background: #ef4444; }
+
         .parts-section { width: 100%; max-width: 900px; }
         .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
         .search-box {
@@ -42,19 +139,299 @@
     </style>
 </head>
 <body>
+
     <a href="index.html" class="back-link">← Back to Full Cockpit</a>
     <h1>Pedestal</h1>
-    <p class="subtitle">Central hub — throttles, flap levers, speedbrakes, MCDU units and more.</p>
+    <p class="subtitle">Click any panel zone to view its FIN, P/N and contents. Scroll down for the full parts index.</p>
 
     <div class="image-container">
         <img src="pedestal.png" alt="Pedestal Close-Up">
+
+        <div class="panel-zone" id="zone-rmp-capt" onclick="showPopup('rmp-capt')">
+            <div class="zone-label">RAMP — CAPT</div>
+            <div class="zone-fin">RMP</div>
+        </div>
+        <div class="panel-zone" id="zone-throttle" onclick="showPopup('throttle')">
+            <div class="zone-label">THROTTLE ASSY · ENG 1–4</div>
+            <div class="zone-fin">TLA</div>
+        </div>
+        <div class="panel-zone" id="zone-rmp-fo" onclick="showPopup('rmp-fo')">
+            <div class="zone-label">RAMP — FO</div>
+            <div class="zone-fin">RMP</div>
+        </div>
+        <div class="panel-zone" id="zone-kccu-capt" onclick="showPopup('kccu-capt')">
+            <div class="zone-label">KCCU — CAPT</div>
+            <div class="zone-fin">C16449AF</div>
+        </div>
+        <div class="panel-zone" id="zone-kccu-fo" onclick="showPopup('kccu-fo')">
+            <div class="zone-label">KCCU — FO</div>
+            <div class="zone-fin">C16449BF</div>
+        </div>
+        <div class="panel-zone" id="zone-eng-master" onclick="showPopup('eng-master')">
+            <div class="zone-label">ENG MASTER · ECAM ICP</div>
+            <div class="zone-fin">1255VU</div>
+        </div>
+        <div class="panel-zone" id="zone-video" onclick="showPopup('video')">
+            <div class="zone-label">VIDEO PANEL</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-printer" onclick="showPopup('printer')">
+            <div class="zone-label">PRINTER #1</div>
+            <div class="zone-fin">CTR</div>
+        </div>
+        <div class="panel-zone" id="zone-cvr" onclick="showPopup('cvr')">
+            <div class="zone-label">CVR CTL BOX</div>
+            <div class="zone-fin">S161-1390-01</div>
+        </div>
+        <div class="panel-zone" id="zone-speedbrake" onclick="showPopup('speedbrake')">
+            <div class="zone-label">SPEED BRAKE</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-tcas-wxr" onclick="showPopup('tcas-wxr')">
+            <div class="zone-label">TCAS · WXR · RUDDER TRIM</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-flaps" onclick="showPopup('flaps')">
+            <div class="zone-label">FLAPS LEVER</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-park-brake" onclick="showPopup('park-brake')">
+            <div class="zone-label">PARK BRAKE</div>
+            <div class="zone-fin">058-002-003</div>
+        </div>
+        <div class="panel-zone" id="zone-rudder-trim" onclick="showPopup('rudder-trim')">
+            <div class="zone-label">RUDDER TRIM · PITCH TRIM</div>
+            <div class="zone-fin">196PN01Y02</div>
+        </div>
+        <div class="panel-zone" id="zone-acms" onclick="showPopup('acms')">
+            <div class="zone-label">ACMS · DFDR</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-ckpt-door" onclick="showPopup('ckpt-door')">
+            <div class="zone-label">CKPT DOOR</div>
+            <div class="zone-fin">—</div>
+        </div>
+        <div class="panel-zone" id="zone-misc-aft" onclick="showPopup('misc-aft')">
+            <div class="zone-label">AFT PEDESTAL — MISC CONTROLS</div>
+            <div class="zone-fin">—</div>
+        </div>
     </div>
 
+    <div id="dark-screen" class="overlay-screen" onclick="closeAllPopups()"></div>
+
+    <!-- RAMP Capt -->
+    <div id="popup-rmp-capt" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>RAMP — Captain</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">RMP8000AA120101</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">4112-0206</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Radio Management Panel — Captain</strong>. Contains <strong>VHF · HF · TEL · SQWK · MENU · NAV</strong> frequency and communication management controls for the Captain side.
+        </div>
+    </div>
+
+    <!-- Throttle -->
+    <div id="popup-throttle" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Throttle Assembly — ENG 1–4</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">FE370000003</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">FR032</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Thrust Lever Assembly</strong> for all four engines. Controls engine thrust from IDLE to TOGA. Includes <strong>FLEX/MCT · CLIMB · A/THR</strong> detents. Manufactured by Ratier Figeac.
+        </div>
+    </div>
+
+    <!-- RAMP FO -->
+    <div id="popup-rmp-fo" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>RAMP — First Officer</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">RMP8000AA120101</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">4112-0430</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Radio Management Panel — First Officer</strong>. Contains <strong>VHF · HF · TEL · SQWK · MENU · NAV</strong> frequency and communication management controls for the FO side.
+        </div>
+    </div>
+
+    <!-- KCCU Capt -->
+    <div id="popup-kccu-capt" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>KCCU — Captain</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C16449AF</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C16449000379</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Keyboard and Cursor Control Unit — Captain</strong>. Used to interact with KCCU display pages, enter data into FMS, and control cursor navigation on the MFD screens. Thales Avionics unit.
+        </div>
+    </div>
+
+    <!-- KCCU FO -->
+    <div id="popup-kccu-fo" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>KCCU — First Officer</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">C16449BF</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">C16449000418</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Keyboard and Cursor Control Unit — First Officer</strong>. Mirror of Capt KCCU. Used to interact with KCCU display pages, enter FMS data, and control cursor navigation on FO MFD screens. Thales Avionics unit.
+        </div>
+    </div>
+
+    <!-- ENG Master -->
+    <div id="popup-eng-master" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>ENG Master · ECAM ICP 10</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">ICP 10</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">271TS10ABY02</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">271TS0192</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>ENG MASTER switches 1–4</strong> (ON/OFF) for engine start and shutdown, and the <strong>ECAM ICP 10</strong> (Image Control Panel) for ECAM system display management.
+        </div>
+    </div>
+
+    <!-- Video -->
+    <div id="popup-video" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Video Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>VIDEO management panel</strong>. Controls cockpit camera video routing and display selection for external and internal camera feeds including taxi cameras and approach cameras.
+        </div>
+    </div>
+
+    <!-- Printer -->
+    <div id="popup-printer" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Printer #1 — Centre Pedestal</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">251375218-1002</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">2513752180131</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Centre pedestal printer unit</strong>. Prints ATIS, clearances, weather reports, and FMS data. SAGEM SA unit.
+        </div>
+    </div>
+
+    <!-- CVR -->
+    <div id="popup-cvr" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>CVR Control Box</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">S161-1390-01</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">301469</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Cockpit Voice Recorder Control Box</strong>. Contains <strong>TEST · ERASE · GND CTL</strong> pushbuttons. L3COM unit. Records last 2 hours of cockpit audio on 4 channels.
+        </div>
+    </div>
+
+    <!-- Speed Brake -->
+    <div id="popup-speedbrake" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Speed Brake Lever</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">321200-1M00</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">BA00020</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Spoiler/Speed Brake control lever</strong>. Deploys flight spoilers for speed reduction and roll augmentation. Positions: <strong>RET · ARM · FLIGHT DETENT · FULL</strong>. SARMA unit.
+        </div>
+    </div>
+
+    <!-- TCAS / WXR -->
+    <div id="popup-tcas-wxr" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>TCAS · WXR · CTL PNL-AESS</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">965-1695-001</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">ISCA-000231</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>TCAS</strong> traffic alert and collision avoidance controls, <strong>WXR (Weather Radar)</strong> tilt/gain/mode controls — CTL PNL-AESS by Honeywell Electro. Also includes <strong>PANEL</strong> and lateral trim controls.
+        </div>
+    </div>
+
+    <!-- Flaps -->
+    <div id="popup-flaps" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Flap / Slat Control Lever</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">80835-00-02</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">80835000000044</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Flap and Slat Control Lever</strong>. Selects flap/slat configuration. Positions: <strong>0 · 1 · 1+F · 2 · 3 · FULL</strong>. Diehl Av unit.
+        </div>
+    </div>
+
+    <!-- Park Brake -->
+    <div id="popup-park-brake" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Park Brake Switch</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">058-002-003</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">H002093</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Parking Brake control switch</strong>. Applies hydraulic pressure to all main gear brakes for ground parking. Also includes <strong>ACCU PRESSURE · BRAKE TEMP · BRAKES</strong> indicators. IEC unit.
+        </div>
+    </div>
+
+    <!-- Rudder Trim -->
+    <div id="popup-rudder-trim" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Rudder Trim · Pitch Trim</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">196PN01Y02</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">RTI1023</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Contains <strong>RUDDER TRIM indicator and reset</strong> (Honeywell), <strong>PITCH TRIM</strong> wheel, and <strong>HANDSET</strong> (incl. cable and bracket — Holmberg P/N N40-1A10000-003 / S/N 242599). Also includes <strong>NWS</strong> nose wheel steering controls.
+        </div>
+    </div>
+
+    <!-- ACMS -->
+    <div id="popup-acms" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>ACMS · DFDR Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Aircraft Condition Monitoring System (ACMS)</strong> and <strong>Digital Flight Data Recorder (DFDR)</strong> control panel. Allows ground crew to initiate reports and check recorder status.
+        </div>
+    </div>
+
+    <!-- CKPT Door -->
+    <div id="popup-ckpt-door" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Cockpit Door Panel</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            <strong>Cockpit Door control panel</strong>. Contains <strong>OPEN · LOCK · UNLK</strong> door control switches, <strong>VIDEO</strong> monitor for door camera view, and door status indicator light. Controls access to the flight deck from the cabin.
+        </div>
+    </div>
+
+    <!-- Misc Aft -->
+    <div id="popup-misc-aft" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>Aft Pedestal — Miscellaneous Controls</h3>
+        <div class="popup-row"><span class="label">FIN</span><span class="value">—</span></div>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">—</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">
+            Aft section of the pedestal containing <strong>audio panel selectors · interphone · USB ports · miscellaneous system switches</strong> for both Captain and FO sides.
+        </div>
+    </div>
+
+    <!-- ── PARTS TABLE ── -->
     <div class="parts-section">
-        <h2>Parts Index</h2>
+        <h2>Pedestal — Parts Index</h2>
         <input class="search-box" type="text" id="searchPedestal" onkeyup="filterTable('searchPedestal','pedestalTable')" placeholder="Search description, P/N or S/N...">
         <table id="pedestalTable">
-            <thead><tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr></thead>
+            <thead>
+                <tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr>
+            </thead>
             <tbody>
                 <tr><td>Cockpit Voice Recorder CTL Box (CVR)</td><td class="pn">S161-1390-01</td><td class="sn">301469</td></tr>
                 <tr><td>CTL PNL-AESS (WXR)</td><td class="pn">965-1695-001</td><td class="sn">ISCA-000231</td></tr>
@@ -73,7 +450,17 @@
             </tbody>
         </table>
     </div>
+
     <script>
+        function showPopup(id) {
+            closeAllPopups();
+            document.getElementById('dark-screen').style.display = 'block';
+            document.getElementById('popup-' + id).style.display = 'block';
+        }
+        function closeAllPopups() {
+            document.getElementById('dark-screen').style.display = 'none';
+            document.querySelectorAll('.popup-box').forEach(p => p.style.display = 'none');
+        }
         function filterTable(inputId, tableId) {
             const input = document.getElementById(inputId).value.toLowerCase();
             document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
@@ -81,5 +468,6 @@
             });
         }
     </script>
+
 </body>
 </html>
