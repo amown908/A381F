@@ -16,13 +16,79 @@
         .back-link:hover { text-decoration: underline; }
         h1 { color: #ffffff; margin-bottom: 5px; }
         .subtitle { color: #94a3b8; margin-bottom: 25px; }
+        
         .image-container {
+            position: relative;
             max-width: 100%; border: 3px solid #374151;
             border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            overflow: hidden; margin-bottom: 35px;
+            overflow: hidden; margin-bottom: 25px;
+            display: inline-block;
         }
         img { max-width: 100%; height: auto; display: block; }
-        .parts-section { width: 100%; max-width: 900px; }
+        
+        /* Interactive Zones */
+        .panel-zone {
+            position: absolute;
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px dashed rgba(239, 68, 68, 0.6);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            transform: translate(-50%, -50%);
+        }
+        .panel-zone:hover {
+            background: rgba(56, 189, 248, 0.3);
+            border: 2px solid #38bdf8;
+            box-shadow: 0 0 12px #38bdf8;
+        }
+
+        /* Hotspot Map Positions (Percentages relative to image size) */
+        #zone-1 { top: 21%; left: 87%; width: 6%; height: 7%; }
+        #zone-2 { top: 23%; left: 27%; width: 7%; height: 9%; }
+        #zone-3 { top: 34%; left: 83%; width: 6%; height: 8%; }
+        #zone-4 { top: 60%; left: 71%; width: 6%; height: 8%; }
+        #zone-5 { top: 71%; left: 36%; width: 6%; height: 8%; }
+        #zone-6 { top: 61%; left: 49%; width: 5%; height: 7%; }
+        #zone-7 { top: 34%; left: 19%; width: 5%; height: 7%; }
+
+        /* Pop-up Structure */
+        .overlay-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 99;
+        }
+        .popup-box {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f2937;
+            border: 2px solid #38bdf8;
+            padding: 22px 25px;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.9);
+            z-index: 100;
+            width: 92%; max-width: 420px;
+        }
+        .popup-box h3 { margin: 0 0 12px 0; color: #38bdf8; font-size: 1.1em; padding-right: 30px; }
+        .popup-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 0.85em; }
+        .popup-row .label { color: #94a3b8; min-width: 60px; }
+        .popup-row .value { font-family: monospace; color: #f97316; }
+        .popup-row .value.sn { color: #a3e635; }
+        .popup-divider { border: none; border-top: 1px solid #374151; margin: 12px 0; }
+        .popup-contents { font-size: 0.85em; color: #cbd5e1; line-height: 1.6; }
+        .popup-contents strong { color: #fbbf24; }
+        
+        .close-btn {
+            position: absolute; top: 12px; right: 12px;
+            background: #374151; color: white; border: none;
+            padding: 4px 9px; cursor: pointer; border-radius: 4px; font-size: 0.85em;
+        }
+        .close-btn:hover { background: #ef4444; }
+
+        .parts-section { width: 100%; max-width: 900px; margin-top: 20px; }
         .parts-section h2 { color: #38bdf8; border-bottom: 2px solid #374151; padding-bottom: 10px; }
         .search-box {
             width: 100%; padding: 10px; margin-bottom: 15px;
@@ -30,7 +96,7 @@
             border-radius: 6px; color: #f3f4f6; font-size: 0.9em;
         }
         .search-box:focus { outline: none; border-color: #38bdf8; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-bottom: 30px; }
         thead tr { background: #1a202c; color: #38bdf8; text-align: left; }
         th { padding: 12px 15px; border-bottom: 2px solid #38bdf8; }
         td { padding: 10px 15px; border-bottom: 1px solid #374151; }
@@ -38,31 +104,122 @@
         tbody tr:hover { background: #263348; }
         .pn { font-family: monospace; color: #f97316; }
         .sn { font-family: monospace; color: #a3e635; }
-        .na { color: #6b7280; font-style: italic; }
     </style>
 </head>
 <body>
     <a href="index.html" class="back-link">← Back to Full Cockpit</a>
     <h1>Lateral Console — Captain Side</h1>
-    <p class="subtitle">Sidestick, NWS tiller, oxygen mask, OIT display and associated equipment.</p>
+    <p class="subtitle">Click on the numbered tags to see quick info, or use the database below.</p>
 
     <div class="image-container">
         <img src="CaptLateral.jpg" alt="Captain Lateral Console Close-Up">
+        
+        <div class="panel-zone" id="zone-1" onclick="showPopup('popup-1')"></div>
+        <div class="panel-zone" id="zone-2" onclick="showPopup('popup-2')"></div>
+        <div class="panel-zone" id="zone-3" onclick="showPopup('popup-3')"></div>
+        <div class="panel-zone" id="zone-4" onclick="showPopup('popup-4')"></div>
+        <div class="panel-zone" id="zone-5" onclick="showPopup('popup-5')"></div>
+        <div class="panel-zone" id="zone-6" onclick="showPopup('popup-6')"></div>
+        <div class="panel-zone" id="zone-7" onclick="showPopup('popup-7')"></div>
+    </div>
+
+    <div id="dark-screen" class="overlay-screen" onclick="closeAllPopups()"></div>
+
+    <div id="popup-1" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>1. OIT Domain & Console Light Switch</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">-</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">-</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">Controls console/floor brightness and flips domain channels for flight operations toggles.</div>
+    </div>
+
+    <div id="popup-2" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>2. Electronic Flight Bag (EFB) - flyPad</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">-</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">-</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">Digital screen used by flight crews for terminal charts, performance calculations, and flight planning documents.</div>
+    </div>
+
+    <div id="popup-3" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>3. OIT Display</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">2513751511001</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">2513751510214</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">**Onboard Information Terminal** screen displaying core aircraft configuration and operations applications.</div>
+    </div>
+
+    <div id="popup-4" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>4. Side Stick</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">L27310000</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">RF01060</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">Primary pitch and roll fly-by-wire flight control stick for inputting manually piloted maneuvers.</div>
+    </div>
+
+    <div id="popup-5" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>5. Steering Handwheel (Tiller)</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">LA5F60032333101</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">320TS0101</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">Nosewheel Steering (NWS) Tiller controller with a center Pedal Disconnect push-button for low-speed ground tracking.</div>
+    </div>
+
+    <div id="popup-6" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>6. Additional Control Device (ACD)</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">2513751721002</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">2513751720923</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">Input interface panel used to command parameters inside the local OIT computing terminal display framework.</div>
+    </div>
+
+    <div id="popup-7" class="popup-box">
+        <button class="close-btn" onclick="closeAllPopups()">✕</button>
+        <h3>7. Display Mount Mechanical Lever</h3>
+        <div class="popup-row"><span class="label">P/N</span><span class="value">-</span></div>
+        <div class="popup-row"><span class="label">S/N</span><span class="value sn">-</span></div>
+        <hr class="popup-divider">
+        <div class="popup-contents">Adjustable pivot bracket arm structure locking system for custom flight bag rotation positioning.</div>
     </div>
 
     <div class="parts-section">
-         <h2> 1. OIT Domain Switch and Console & Floor Light Switch </h2>
-         <h2> 2. Electronic Flight Bag (EFB) - flyPad </h2>
-         <h2> 3. OIT Display </h2>
-         <h2> 4. Side Stick </h2>
-         <h2> 5. Steering Handwheels (Tiller) </h2>
-         <h2> 6. Additional Control Device (ACD) for the OIT </h2>
+        <h2>1-7 Visual Components Data Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item #</th>
+                    <th>Description</th>
+                    <th>Part Number</th>
+                    <th>Serial Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>OIT Domain Switch / Console Light Switch</td><td class="pn">-</td><td class="sn">-</td></tr>
+                <tr><td>2</td><td>Electronic Flight Bag (EFB) - flyPad</td><td class="pn">-</td><td class="sn">-</td></tr>
+                <tr><td>3</td><td>OIT Display - Capt</td><td class="pn">2513751511001</td><td class="sn">2513751510214</td></tr>
+                <tr><td>4</td><td>Side Stick - Capt</td><td class="pn">L27310000</td><td class="sn">RF01060</td></tr>
+                <tr><td>5</td><td>Steering Hand Wheel (Tiller) - Capt</td><td class="pn">LA5F60032333101</td><td class="sn">320TS0101</td></tr>
+                <tr><td>6</td><td>OIT Additional Control Device (ACD)</td><td class="pn">2513751721002</td><td class="sn">2513751720923</td></tr>
+                <tr><td>7</td><td>EFB Swivel Articulated Arm Joint Mount</td><td class="pn">-</td><td class="sn">-</td></tr>
+            </tbody>
+        </table>
 
         <h2>Parts Index</h2>
-  <p style="color:#ffffff; margin-top: 10px;">2. Electronic Flight Bag (EFB) - flyPad</p>
         <input class="search-box" type="text" id="searchCaptLateral" onkeyup="filterTable('searchCaptLateral','captLateralTable')" placeholder="Search description, P/N or S/N...">
         <table id="captLateralTable">
-            <thead><tr><th>Description</th><th>Part Number</th><th>Serial Number</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Part Number</th>
+                    <th>Serial Number</th>
+                </tr>
+            </thead>
             <tbody>
                 <tr><td>Light – Briefcase Capt</td><td class="pn">D947-61-001-002</td><td class="sn">94761-0104</td></tr>
                 <tr><td>Light - Lateral Console - Capt</td><td class="pn">D947-21-001-002</td><td class="sn">947-21-0106</td></tr>
@@ -79,7 +236,21 @@
             </tbody>
         </table>
     </div>
+
     <script>
+        function showPopup(popupId) {
+            document.getElementById('dark-screen').style.display = 'block';
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function closeAllPopups() {
+            document.getElementById('dark-screen').style.display = 'none';
+            var popups = document.getElementsByClassName('popup-box');
+            for(var i = 0; i < popups.length; i++) {
+                popups[i].style.display = 'none';
+            }
+        }
+
         function filterTable(inputId, tableId) {
             const input = document.getElementById(inputId).value.toLowerCase();
             document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
